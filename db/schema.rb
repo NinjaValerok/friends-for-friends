@@ -10,19 +10,6 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170508134206) do
-
-  create_table "feeds", force: :cascade do |t|
-    t.text     "message"
-    t.string   "external_id"
-    t.boolean  "rent"
-    t.boolean  "search"
-    t.datetime "updated"
-  end
-
-  create_table "users", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
+ActiveRecord::Schema.define(version: 0) do
 
 end
