@@ -1,0 +1,15 @@
+%h1 Feed#index
+%p Find me in app/views/feed/index.html.haml
+
+
+%p
+  - @feeds.each do |feed|
+    .row
+      .col-md-12.post
+        .post-header
+          = link_to "post", "https://www.facebook.com/#{feed["id"]}", target: "_blank"
+          = time_ago_in_words "#{feed["updated_time"]}"
+          ago
+
+        .post-message
+          = feed["message"]

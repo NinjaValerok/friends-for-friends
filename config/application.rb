@@ -18,6 +18,8 @@ module Fff
       g.test_framework  :rspec, :fixture => false
       g.view_specs      false
       g.helper_specs    false
+      g.assets = false
+      g.helper = false
       g.fixture_replacement :fabrication
   end
 
