@@ -20,7 +20,7 @@
 class Feed < ApplicationRecord
   # before_save :parse_message, if: ->() { message.present? }
   searchkick word_start: [:message, :type, :created_at]
-
+  paginates_per 8
   class << self
     def update_feed
       feeds = get_raw_feeds
