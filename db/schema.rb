@@ -16,7 +16,14 @@ ActiveRecord::Schema.define(version: 20170708163259) do
     t.text     "message"
     t.string   "external_id"
     t.string   "provider"
-    t.datetime "update"
+    t.string   "type"
+    t.string   "author_uid"
+    t.string   "provider_type"
+    t.datetime "provider_created_at"
+    t.datetime "provider_updated_at"
+    t.integer  "author_id"
+    t.datetime "created_at"
+    t.index ["author_id"], name: "index_feeds_on_author_id"
   end
 
   create_table "identities", force: :cascade do |t|

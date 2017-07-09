@@ -52,6 +52,7 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
   gem 'pry-rails'
   gem "better_errors"
+  gem 'annotate'
 end
 
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
@@ -63,3 +64,6 @@ gem "koala"
 gem 'devise'
 gem 'omniauth'
 gem 'omniauth-facebook'
+gem 'searchkick'
+gem 'kaminari'
+gem 'gemoji-parser'
