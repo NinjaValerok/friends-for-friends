@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   get 'feed/index'
+  get 'feed/update'
   root to: 'feed#index', via: :get
 
   devise_for :users, 

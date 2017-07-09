@@ -8,6 +8,7 @@
   %body
     .container
       .row
-        = render 'layouts/navigation'
-        = render 'layouts/messages'
-        = yield
+        .col-md-12
+          = render 'layouts/navigation'
+          = render 'layouts/messages'
+          = yield

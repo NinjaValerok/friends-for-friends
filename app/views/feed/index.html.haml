@@ -1,18 +1,23 @@
-%h2 Последнии публикации
+.row
+  .col-md-12
+    %h2 Последнии публикации
+.row
+  .col-md-6
+    = form_tag(feed_index_path, method: :get, class: "form-inline", role: 'search') do
+      .input-group
+        = text_field_tag :query, |
+          params[:query],        |
+          id: 'feeds_search',    |
+          autocomplete: :off,    |
+          placeholder: 'Search', |
+          class: 'form-control'  |
+        .input-group-btn.search-panel
+          = link_to 'Clear', root_url, class: "btn btn-default"
+          = submit_tag 'Search', name: nil, class: "btn btn-default"
 
-%p
-  = form_tag(feed_index_path, method: :get, class: "form-inline", role: 'search') do
-    .input-group
-      = text_field_tag :query, |
-        params[:query],        |
-        id: 'feeds_search',    |
-        autocomplete: :off,    |
-        placeholder: 'Search', |
-        class: 'form-control'  |
-      .input-group-btn.search-panel
-        = link_to 'Clear', root_url, class: "btn btn-default"
-        = submit_tag 'Search', name: nil, class: "btn btn-default"
-
+  .col-md-6
+    .pull-right
+      = button_tag "Обновить публикации", :type => 'button', :class => "btn btn-primary", :onclick => "location.href = '#{feed_update_path}'"
 %p
   - @feeds.each do |feed|
     .row
