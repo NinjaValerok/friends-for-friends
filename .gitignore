@@ -21,3 +21,4 @@
 .byebug_history
 /config/facebook.yml
 /config/initializers/koala.rb
+.idea/*

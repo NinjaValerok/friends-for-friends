@@ -3,10 +3,8 @@ class CreateFeeds < ActiveRecord::Migration[5.0]
     create_table :feeds do |t|
       t.text :message
       t.string :external_id
-      t.integer :sourse_id
-      t.boolean :rent
-      t.boolean :search
-      t.datetime :updated
+      t.string :provider
+      t.datetime :update
     end
   end
 end

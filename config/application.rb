@@ -22,6 +22,8 @@ module Fff
       g.helper = false
       g.fixture_replacement :fabrication
   end
-
+  config.before_configuration do
+    ::FACEBOOK_CONFIG = YAML.load_file("#{::Rails.root}/config/facebook.yml")
+  end
   end
 end
