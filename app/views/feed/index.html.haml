@@ -1,6 +1,19 @@
 %h2 Последнии публикации
 
 %p
+  = form_tag(feed_index_path, method: :get, class: "form-inline", role: 'search') do
+    .input-group
+      = text_field_tag :query, |
+        params[:query],        |
+        id: 'feeds_search',    |
+        autocomplete: :off,    |
+        placeholder: 'Search', |
+        class: 'form-control'  |
+      .input-group-btn.search-panel
+        = link_to 'Clear', root_url, class: "btn btn-default"
+        = submit_tag 'Search', name: nil, class: "btn btn-default"
+
+%p
   - @feeds.each do |feed|
     .row
       .col-md-12
