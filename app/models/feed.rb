@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: feeds
@@ -15,24 +17,25 @@
 #  created_at          :datetime
 #
 
-# При обновлении фида создавать юзера из поля from
-
 class Feed < ApplicationRecord
   # before_save :parse_message, if: ->() { message.present? }
-  searchkick word_start: [:message, :type, :provider_created_at]
-  searchkick language: "russian"
+  searchkick word_start: %i[message type provider_created_at tagged]
+  searchkick language: 'russian'
   paginates_per 8
+  acts_as_taggable
+  scope :search_import, -> { includes(:tags) }
+
   class << self
     def update_feed
-      feeds = get_raw_feeds
+      feeds = get_raw_feed
       # feed.next_page
       feeds.each do |raw_feed|
         external_id = raw_feed['id']
         break if Feed.find_by(external_id: external_id, provider: 'facebook')
         user = User.from_feed raw_feed['from']
         Feed.create(
-          message: raw_feed['message'], 
-          external_id: external_id, 
+          message: raw_feed['message'],
+          external_id: external_id,
           provider: 'facebook',
           author_uid: raw_feed['from']['id'],
           provider_type: raw_feed['type'],
@@ -43,14 +46,14 @@ class Feed < ApplicationRecord
       end
     end
 
-    def get_raw_feeds
+    def get_raw_feed
       oauth = Koala::Facebook::OAuth.new(FACEBOOK_CONFIG['app_id'], FACEBOOK_CONFIG['secret'])
       access_token = oauth.get_app_access_token
       graph = Koala::Facebook::API.new(access_token)
       graph.get_connection(
-        '509679185734909', 
-        'feed', 
-        fields: ['message', 'id', 'from', 'type', 'picture', 'link', 'created_time', 'updated_time']
+        '509679185734909',
+        'feed',
+        fields: %w[message id from type picture link created_time updated_time]
       )
     end
   end
@@ -60,6 +63,7 @@ class Feed < ApplicationRecord
       id: id,
       message: message,
       link: link,
+      tagged: tags.map(&:name).join(' ')
     }
   end
 
@@ -67,5 +71,4 @@ class Feed < ApplicationRecord
     return unless external_id && provider
     "https://www.facebook.com/#{external_id}"
   end
-
 end

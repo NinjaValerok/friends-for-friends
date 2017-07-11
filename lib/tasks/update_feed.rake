@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 namespace :feed do
   task :update do
     Feed.destroy_all

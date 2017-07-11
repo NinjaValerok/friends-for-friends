@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: identities
@@ -13,7 +15,7 @@
 class Identity < ApplicationRecord
   belongs_to :user
   validates_presence_of :uid, :provider
-  validates_uniqueness_of :uid, :scope => :provider
+  validates_uniqueness_of :uid, scope: :provider
 
   def self.from_oauth(auth)
     find_or_create_by(uid: auth.uid || auth.id, provider: auth.provider)

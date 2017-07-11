@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 # == Schema Information
 #
 # Table name: users
@@ -18,12 +20,12 @@
 #  last_sign_in_ip     :string
 #
 
+# TODO: При регистрации пользователя искать его посты по Feed#gitauthor_uid
 class User < ApplicationRecord
-  devise :database_authenticatable, :registerable, :rememberable, :trackable, :omniauthable, :omniauth_providers => [:facebook]
-  searchkick word_start: [:nick_name, :email, :phone]
+  devise :database_authenticatable, :registerable, :rememberable, :trackable, :omniauthable, omniauth_providers: [:facebook]
+  searchkick word_start: %i[nick_name email phone]
 
   class << self
-
     # TODO: надо обновлять не заполненые данны
     def from_omniauth(auth, signed_in_resource = nil)
       identity = Identity.from_oauth(auth)

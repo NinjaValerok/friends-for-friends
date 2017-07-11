@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 class AddDeviseToUsers < ActiveRecord::Migration[5.0]
   def change
     ## Database authenticatable
@@ -6,9 +8,9 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.0]
 
     ## Rememberable
     add_column :users, :remember_created_at, :datetime
-    
+
     ## Trackable
-    add_column :users, :sign_in_count, :integer, :default => 0
+    add_column :users, :sign_in_count, :integer, default: 0
     add_column :users, :current_sign_in_at, :datetime
     add_column :users, :last_sign_in_at, :datetime
     add_column :users, :current_sign_in_ip, :string
@@ -17,4 +19,3 @@ class AddDeviseToUsers < ActiveRecord::Migration[5.0]
     add_index :users, :email, unique: true
   end
 end
-
