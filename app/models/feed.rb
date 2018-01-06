@@ -19,19 +19,22 @@
 
 class Feed < ApplicationRecord
   # before_save :parse_message, if: ->() { message.present? }
-  searchkick word_start: %i[message type provider_created_at tagged]
-  searchkick language: 'russian'
+  searchkick word_start: %i[message type provider_created_at tagged],
+    language: 'russian'
   paginates_per 8
   acts_as_taggable
   scope :search_import, -> { includes(:tags) }
 
   class << self
-    def update_feed
+
+    # сделать проверку на уже имеющиеся посты (по дате и id юзера)
+    def update_feed(pages_count = 1)
       feeds = get_raw_feed
-      # feed.next_page
-      feeds.each do |raw_feed|
+      raw_feed = feeds.first
+
+      5.times do
         external_id = raw_feed['id']
-        break if Feed.find_by(external_id: external_id, provider: 'facebook')
+        # break if Feed.find_by(external_id: external_id, provider: 'facebook')
         user = User.from_feed raw_feed['from']
         Feed.create(
           message: raw_feed['message'],
@@ -43,6 +46,7 @@ class Feed < ApplicationRecord
           provider_updated_at: raw_feed['updated_time'],
           author_id: user.try(:id)
         )
+        raw_feed = feeds.next_page
       end
     end
 
